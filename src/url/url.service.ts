@@ -12,7 +12,7 @@ export class UrlService {
   ) {}
 
   async shortenUrl(originalUrl: string): Promise<Url> {
-    const shortUrl = nanoid(8); // Genera un string aleatorio de longitud 8.
+    const shortUrl = nanoid(8); 
     const url = this.urlsRepository.create({ originalUrl, shortUrl });
     await this.urlsRepository.save(url);
     return url;
