@@ -3,18 +3,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Url } from './entities/url.entity';
 import { nanoid } from 'nanoid';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+
 
 @Injectable()
 export class UrlService {
   constructor(
-    @InjectRepository(Url)
-    private urlsRepository: Repository<Url>,
+    @InjectRepository(Url) private urlsRepository: Repository<Url>,
+    @InjectQueue('url-processing') private urlQueue: Queue
   ) {}
 
   async shortenUrl(originalUrl: string): Promise<Url> {
-    const shortUrl = nanoid(8); 
+    const shortUrl = nanoid(8);
     const url = this.urlsRepository.create({ originalUrl, shortUrl });
     await this.urlsRepository.save(url);
+    await this.urlQueue.add('getTitle', { id: url.id, originalUrl: url.originalUrl });
     return url;
   }
 
