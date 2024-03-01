@@ -17,4 +17,9 @@ export class UrlController {
     const url = await this.urlService.redirectToOriginal(shortUrl);
     return { url: url.originalUrl, statusCode: 302 };
   }
+
+  @Get('top')
+async getTopUrls() {
+  return this.urlService.getTopUrls();
+}
 }
