@@ -19,7 +19,7 @@ export class UrlController {
   }
 
   @Get('top')
-async getTopUrls() {
+  async getTopUrls() {
   return this.urlService.getTopUrls();
 }
 }
