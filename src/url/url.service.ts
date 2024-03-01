@@ -27,4 +27,13 @@ export class UrlService {
     await this.urlsRepository.save(url);
     return url;
   }
+
+  async getTopUrls(): Promise<Url[]> {
+    return this.urlsRepository.find({
+      order: {
+        clickCount: 'DESC',
+      },
+      take: 100,
+    });
+  }
 }
