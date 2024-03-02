@@ -62,11 +62,30 @@ $ npm run test:cov
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## Explation
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Recibir un URL largo
+Cuando un usuario envía un URL largo que quiere acortar, nuestro sistema lo recibe a través de un endpoint específico.
+
+2. Generar un URL corto
+Para este URL largo, generamos un identificador único corto. Esto se hace usando una función (por ejemplo, nanoid) que crea una cadena de caracteres aleatoria. Esta cadena será el "alias" o versión corta del URL original.
+
+3. Guardar el par URL largo y URL corto
+Guardamos ambos, el URL largo original y el URL corto generado, en nuestra base de datos. Así, cada vez que alguien acceda al URL corto, sabremos a qué URL largo redirigirlo.
+
+4. Redirección usando el URL corto
+Cuando alguien ingresa el URL corto, buscamos en la base de datos el URL largo correspondiente a ese identificador corto y redirigimos al usuario a ese URL largo.
+
+5. Contar las visitas
+Cada vez que redirigimos desde un URL corto a su URL largo, contamos esa acción. Esto nos permite saber cuántas veces se ha accedido a cada URL corto.
+
+6. Obtener el título de la página del URL largo
+Para cada URL largo, ejecutamos un trabajo en segundo plano que visita el URL, obtiene el título de la página web y guarda ese título en la base de datos junto al URL largo y corto.
+
+7. Listar los URLs más populares
+Podemos listar los URLs más accesados basándonos en el contador de visitas, mostrando tanto los URLs cortos como los largos y sus títulos.
+
+En resumen, la lógica detrás del acortador de URLs involucra generar un identificador único para cada URL largo, guardar este par en la base de datos, permitir la redirección de los URLs cortos a sus correspondientes URLs largos, contar las veces que se utiliza cada URL corto, y opcionalmente, recolectar información adicional como el título de la página.
 
 ## License
 
